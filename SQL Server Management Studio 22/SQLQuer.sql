@@ -1,0 +1,3 @@
+SELECT name FROM sys.databases;
+CREATE DATABASE StudentDB;
+ALTER LOGIN sa WITH PASSWORD = 'Nishanth@123';

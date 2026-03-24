@@ -1,0 +1,83 @@
+<div class="container mt-4">
+
+  <div class="dashboard-header shadow">
+
+  <div class="d-flex align-items-center justify-content-between flex-wrap">
+
+    <!-- Title -->
+    <h3 class="title m-0">Student Management Dashboard</h3>
+
+    <!-- Search -->
+    <input
+      type="text"
+      class="form-control search-box"
+      placeholder="Search student..."
+      [(ngModel)]="searchText">
+
+    <!-- Button -->
+    <button class="btn btn-success add-btn" (click)="addStudent()">
+      + Register Student
+    </button>
+
+  </div>
+
+</div>
+
+  <table class="table table-bordered table-striped shadow-sm">
+    <thead class="table-dark">
+      <tr>
+        <th>S.No</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>City</th>
+        <th>Course</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let student of students | studentSearch:searchText; let i = index">
+
+        <td>{{ i + 1 }}</td>
+        <td>{{ student.firstName }}</td>
+        <td>{{ student.lastName }}</td>
+
+        <td>
+          <span class="badge bg-info text-dark">
+            {{ student.age }}
+          </span>
+        </td>
+
+        <td>{{ student.gender }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.phoneNumber }}</td>
+        <td>{{ student.city }}</td>
+
+        <td>
+          <span class="badge bg-secondary">
+            {{ student.course }}
+          </span>
+        </td>
+
+        <td>
+          <button class="btn btn-info btn-sm me-2"
+                  (click)="onEdit(student)">
+            Edit
+          </button>
+
+          <button class="btn btn-danger btn-sm"
+                  (click)="onDelete(student.studentId!)">
+            Delete
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

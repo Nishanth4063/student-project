@@ -1,0 +1,150 @@
+<div class="page-bg">
+  <div class="card">
+
+    <!-- Back Button -->
+    <button class="back-btn top-right" (click)="router.navigate(['/view-students'])">
+      Back to Dashboard
+    </button>
+
+    <h2>Register New Student</h2>
+
+    <!-- ✅ FORM WITH REFERENCE -->
+    <form #studentForm="ngForm" (ngSubmit)="onSubmit(studentForm)">
+
+      <!-- First & Last Name -->
+      <div class="form-group">
+
+        <div>
+          <label>First Name</label>
+          <input type="text"
+                 [(ngModel)]="student.firstName"
+                 name="firstName"
+                 #firstName="ngModel"
+                 required
+                 pattern="[A-Za-z\s]+"
+                 title="Only letters allowed" />
+
+          <div *ngIf="firstName.invalid && firstName.touched" class="text-red-500">
+            First Name must contain only letters!
+          </div>
+        </div>
+
+        <div>
+          <label>Last Name</label>
+          <input type="text"
+                 [(ngModel)]="student.lastName"
+                 name="lastName"
+                 #lastName="ngModel"
+                 required
+                 pattern="[A-Za-z\s]+"
+                 title="Only letters allowed" />
+
+          <div *ngIf="lastName.invalid && lastName.touched" class="text-red-500">
+            Last Name must contain only letters!
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Age & Gender -->
+      <div class="form-group">
+        <div>
+          <label>Age</label>
+          <input type="number"
+                 [(ngModel)]="student.age"
+                 name="age"
+                 #age="ngModel"
+                 required>
+
+          <div *ngIf="age.invalid && age.touched" class="text-red-500">
+            Age is required!
+          </div>
+        </div>
+
+        <div>
+          <label>Gender</label>
+          <select [(ngModel)]="student.gender"
+                  name="gender"
+                  #gender="ngModel"
+                  required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+
+          <div *ngIf="gender.invalid && gender.touched" class="text-red-500">
+            Gender is required!
+          </div>
+        </div>
+      </div>
+
+      <!-- Email & Phone -->
+      <div class="form-group">
+        <div>
+          <label>Email</label>
+          <input type="email"
+            [(ngModel)]="student.email"
+            name="email"
+            #email="ngModel"
+            required
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$"
+            title="Enter a valid email (must contain @)" />
+
+        <div *ngIf="email.invalid && email.touched" class="text-red-500">
+          Enter valid email ID!
+        </div>
+        </div>
+
+        <div>
+          <label>Phone Number</label>
+          <input type="text"
+                 [(ngModel)]="student.phoneNumber"
+                 name="phoneNumber"
+                 #phone="ngModel"
+                 required
+                 pattern="[0-9]{10}">
+
+          <div *ngIf="phone.invalid && phone.touched" class="text-red-500">
+            Enter valid 10-digit phone number!
+          </div>
+        </div>
+      </div>
+
+      <!-- City & Course -->
+      <div class="form-group">
+        <div>
+          <label>City</label>
+          <input type="text"
+       [(ngModel)]="student.city"
+       name="city"
+       #city="ngModel"
+       required
+       pattern="^[A-Za-z\s]+$"
+       title="Only letters allowed" />
+
+       <div *ngIf="city.invalid && city.touched" class="text-red-500">
+         City must contain only letters!
+       </div>
+       </div>
+ 
+        <div>
+          <label>Course</label>
+          <input type="text"
+                 [(ngModel)]="student.course"
+                 name="course"
+                 #course="ngModel"
+                 required>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+        class="save-btn"
+        >
+        Save to Database
+      </button>
+
+    </form>
+
+  </div>
+</div>

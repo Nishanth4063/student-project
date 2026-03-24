@@ -1,0 +1,67 @@
+.page-bg{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(to right,#cfd9df,#e2c7e6);
+}
+
+.card{
+  width:750px;
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  position:relative;
+}
+
+h2{
+  margin-bottom:30px;
+  font-weight:700;
+}
+
+.form-group{
+  display:flex;
+  gap:25px;
+  margin-bottom:20px;
+}
+
+.form-group div{
+  flex:1;
+}
+
+label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:500;
+}
+
+input,select{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.save-btn{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(45deg,#7b1fa2,#9c27b0);
+  color:white;
+  font-size:16px;
+  font-weight:600;
+  margin-top:20px;
+}
+
+.back-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:#ff6f61;
+  border:none;
+  color:white;
+  padding:10px 18px;
+  border-radius:8px;
+}

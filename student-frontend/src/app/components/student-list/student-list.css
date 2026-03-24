@@ -1,0 +1,53 @@
+.dashboard-header{
+  background: linear-gradient(135deg,#1f2937,#111827);
+  color: white;
+  padding: 18px 25px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.title{
+  font-weight: 600;
+}
+
+.search-box{
+  max-width: 320px;
+  border-radius: 8px;
+  margin: 0 20px;
+}
+
+.add-btn{
+  border-radius: 8px;
+  padding: 6px 16px;
+}
+
+table{
+  margin-top: 0px;
+}
+.table-responsive {
+  overflow-x: auto; /* Adds a scrollbar if the screen is too small */
+}
+
+th {
+  white-space: nowrap; /* Prevents headers from wrapping */
+  font-size: 0.9rem;
+}
+
+td {
+  vertical-align: middle;
+  font-size: 0.85rem;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa; /* Highlighting rows makes it easier to read */
+}
+.table tbody tr:hover{
+  background-color:#f1f5f9;
+  cursor:pointer;
+}
+
+.badge{
+  padding:6px 10px;
+  font-size:12px;
+  border-radius:8px;
+}
