@@ -1,2 +1,5 @@
-*.html linguist-detectable=false
-*.css linguist-detectable=false
+# Ignore frontend files for language stats
+**/*.html linguist-vendored
+**/*.css linguist-vendored
+**/*.ts linguist-vendored
+**/frontend/** linguist-vendored
