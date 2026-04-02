@@ -1,47 +1,56 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Student } from '../../models/student.model';
 import { StudentService } from '../../service/student.service';
-import { CommonModule } from '@angular/common'; // ✅ imported
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-student-create',
   standalone: true,
-  imports: [FormsModule, CommonModule], // ✅ add CommonModule here
+  imports: [FormsModule, CommonModule],
   templateUrl: './student-create.html',
-  styleUrls: ['./student-create.css'] // ❌ note: it should be styleUrls, not styleUrl
+  styleUrls: ['./student-create.css']
 })
 export class StudentCreateComponent {
+
   student: Student = {
-    firstName: '', lastName: '', age: 0, gender: '',
-    email: '', phoneNumber: '', city: '', course: ''
+    firstName: '',
+    lastName: '',
+    age: 0,
+    gender: '',
+    email: '',
+    phoneNumber: '',
+    city: '',
+    course: '',
+    enrollmentDate: new Date().toISOString() // Automatically set current date
   };
 
-  constructor(private studentService: StudentService, public router: Router) {}
+  constructor(
+    private studentService: StudentService,
+    public router: Router
+  ) {}
 
-  onSubmit(form: any) {
-
-  // 🔥 Force all fields to show validation errors
-  Object.keys(form.controls).forEach(field => {
-    form.controls[field].markAsTouched();
-  });
-
-  // 🚫 Stop if invalid
-  if (form.invalid) {
-    alert("Please fix validation errors!");
-    return;
-  }
-
-  // ✅ Only valid data goes to backend
-  this.studentService.addStudent(this.student).subscribe({
-    next: (response: any) => {
-      alert(response.message);
-      this.router.navigate(['/view-students']);
-    },
-    error: () => {
-      alert("Backend Error!");
+  onSubmit(form: NgForm) {
+    // 1. Mark all fields as touched to show validation errors if user just hits Enter
+    if (form.invalid) {
+      Object.keys(form.controls).forEach(field => {
+        form.controls[field].markAsTouched();
+      });
+      return;
     }
-  });
-}
+
+    // 2. Call service to add student
+    this.studentService.addStudent(this.student).subscribe({
+      next: (response) => {
+        console.log('Success:', response);
+        alert("Student added successfully!");
+        this.router.navigate(['/view-students']);
+      },
+      error: (err) => {
+        console.error('Backend Error:', err);
+        alert("Failed to save student. Please check the backend connection.");
+      }
+    });
+  }
 }

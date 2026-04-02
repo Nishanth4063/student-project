@@ -1,150 +1,169 @@
-<div class="page-bg">
-  <div class="card">
+<div class="update-page">
+  <div class="update-container">
 
-    <!-- Back Button -->
-    <button class="back-btn top-right" (click)="router.navigate(['/view-students'])">
-      Back to Dashboard
-    </button>
+    <div class="header">
+      <h2>Register New Student</h2>
+      <button type="button" class="back-btn" (click)="router.navigate(['/view-students'])">
+        Back
+      </button>
+    </div>
 
-    <h2>Register New Student</h2>
+    <form #studentForm="ngForm" (ngSubmit)="onSubmit(studentForm)" class="student-form" novalidate>
 
-    <!-- ✅ FORM WITH REFERENCE -->
-    <form #studentForm="ngForm" (ngSubmit)="onSubmit(studentForm)">
-
-      <!-- First & Last Name -->
-      <div class="form-group">
-
-        <div>
-          <label>First Name</label>
-          <input type="text"
-                 [(ngModel)]="student.firstName"
-                 name="firstName"
-                 #firstName="ngModel"
-                 required
-                 pattern="[A-Za-z\s]+"
-                 title="Only letters allowed" />
-
-          <div *ngIf="firstName.invalid && firstName.touched" class="text-red-500">
-            First Name must contain only letters!
+      <div class="row">
+        <div class="form-group">
+          <label>First Name <span class="text-danger">*</span></label>
+          <input type="text" 
+                 class="form-control" 
+                 [(ngModel)]="student.firstName" 
+                 name="firstName" 
+                 #firstName="ngModel" 
+                 required 
+                 pattern="^[A-Za-z\s]+$" 
+                 [class.is-invalid]="firstName.invalid && (firstName.touched || studentForm.submitted)"
+                 placeholder="Enter First Name" />
+          <div *ngIf="firstName.invalid && (firstName.touched || studentForm.submitted)" class="text-danger">
+            <span *ngIf="firstName.errors?.['required']">First Name is required.</span>
+            <span *ngIf="firstName.errors?.['pattern']">Only letters allowed.</span>
           </div>
         </div>
 
-        <div>
-          <label>Last Name</label>
-          <input type="text"
-                 [(ngModel)]="student.lastName"
-                 name="lastName"
-                 #lastName="ngModel"
-                 required
-                 pattern="[A-Za-z\s]+"
-                 title="Only letters allowed" />
-
-          <div *ngIf="lastName.invalid && lastName.touched" class="text-red-500">
-            Last Name must contain only letters!
+        <div class="form-group">
+          <label>Last Name <span class="text-danger">*</span></label>
+          <input type="text" 
+                 class="form-control" 
+                 [(ngModel)]="student.lastName" 
+                 name="lastName" 
+                 #lastName="ngModel" 
+                 required 
+                 pattern="^[A-Za-z\s]+$" 
+                 [class.is-invalid]="lastName.invalid && (lastName.touched || studentForm.submitted)"
+                 placeholder="Enter Last Name" />
+          <div *ngIf="lastName.invalid && (lastName.touched || studentForm.submitted)" class="text-danger">
+            <span *ngIf="lastName.errors?.['required']">Last Name is required.</span>
+            <span *ngIf="lastName.errors?.['pattern']">Only letters allowed.</span>
           </div>
         </div>
-
       </div>
 
-      <!-- Age & Gender -->
-      <div class="form-group">
-        <div>
-          <label>Age</label>
-          <input type="number"
-                 [(ngModel)]="student.age"
-                 name="age"
-                 #age="ngModel"
-                 required>
-
-          <div *ngIf="age.invalid && age.touched" class="text-red-500">
-            Age is required!
+      <div class="row">
+        <div class="form-group">
+          <label>Age <span class="text-danger">*</span></label>
+          <input type="number" 
+                 class="form-control" 
+                 [(ngModel)]="student.age" 
+                 name="age" 
+                 #age="ngModel" 
+                 required 
+                 min="18" 
+                 max="100" 
+                 [class.is-invalid]="age.invalid && (age.touched || studentForm.submitted)" />
+          <div *ngIf="age.invalid && (age.touched || studentForm.submitted)" class="text-danger">
+            Age must be between 18 and 100.
           </div>
         </div>
 
-        <div>
-          <label>Gender</label>
-          <select [(ngModel)]="student.gender"
-                  name="gender"
-                  #gender="ngModel"
-                  required>
-            <option value="">Select Gender</option>
+        <div class="form-group">
+          <label>Gender <span class="text-danger">*</span></label>
+          <select class="form-control" 
+                  [(ngModel)]="student.gender" 
+                  name="gender" 
+                  #gender="ngModel" 
+                  required
+                  [class.is-invalid]="gender.invalid && (gender.touched || studentForm.submitted)">
+            <option value="" disabled>Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-
-          <div *ngIf="gender.invalid && gender.touched" class="text-red-500">
-            Gender is required!
+          <div *ngIf="gender.invalid && (gender.touched || studentForm.submitted)" class="text-danger">
+            Please select a gender.
           </div>
         </div>
       </div>
 
-      <!-- Email & Phone -->
-      <div class="form-group">
-        <div>
-          <label>Email</label>
-          <input type="email"
-            [(ngModel)]="student.email"
-            name="email"
-            #email="ngModel"
-            required
-            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$"
-            title="Enter a valid email (must contain @)" />
-
-        <div *ngIf="email.invalid && email.touched" class="text-red-500">
-          Enter valid email ID!
+      <div class="row">
+        <div class="form-group">
+          <label>Email <span class="text-danger">*</span></label>
+          <input type="email" 
+                 class="form-control" 
+                 [(ngModel)]="student.email" 
+                 name="email" 
+                 #email="ngModel" 
+                 required 
+                 pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$" 
+                 [class.is-invalid]="email.invalid && (email.touched || studentForm.submitted)"
+                 placeholder="example@mail.com" />
+          <div *ngIf="email.invalid && (email.touched || studentForm.submitted)" class="text-danger">
+            <span *ngIf="email.errors?.['required']">Email is required.</span>
+            <span *ngIf="email.errors?.['pattern']">Invalid email format.</span>
+          </div>
         </div>
-        </div>
 
-        <div>
-          <label>Phone Number</label>
-          <input type="text"
-                 [(ngModel)]="student.phoneNumber"
-                 name="phoneNumber"
-                 #phone="ngModel"
-                 required
-                 pattern="[0-9]{10}">
-
-          <div *ngIf="phone.invalid && phone.touched" class="text-red-500">
-            Enter valid 10-digit phone number!
+        <div class="form-group">
+          <label>Phone Number <span class="text-danger">*</span></label>
+          <input type="text" 
+                 class="form-control" 
+                 [(ngModel)]="student.phoneNumber" 
+                 name="phoneNumber" 
+                 #phone="ngModel" 
+                 required 
+                 pattern="^[0-9]{10}$" 
+                 [class.is-invalid]="phone.invalid && (phone.touched || studentForm.submitted)"
+                 placeholder="10-digit number" />
+          <div *ngIf="phone.invalid && (phone.touched || studentForm.submitted)" class="text-danger">
+            Valid 10-digit number is required.
           </div>
         </div>
       </div>
 
-      <!-- City & Course -->
-      <div class="form-group">
-        <div>
-          <label>City</label>
-          <input type="text"
-       [(ngModel)]="student.city"
-       name="city"
-       #city="ngModel"
-       required
-       pattern="^[A-Za-z\s]+$"
-       title="Only letters allowed" />
+      <div class="row">
+        <div class="form-group">
+          <label>City <span class="text-danger">*</span></label>
+          <input type="text" 
+                 class="form-control" 
+                 [(ngModel)]="student.city" 
+                 name="city" 
+                 #city="ngModel" 
+                 required 
+                 pattern="^[A-Za-z\s]+$" 
+                 [class.is-invalid]="city.invalid && (city.touched || studentForm.submitted)"
+                 placeholder="Enter City" />
+          <div *ngIf="city.invalid && (city.touched || studentForm.submitted)" class="text-danger">
+            <span *ngIf="city.errors?.['required']">City is required.</span>
+            <span *ngIf="city.errors?.['pattern']">Only letters allowed.</span>
+          </div>
+        </div>
 
-       <div *ngIf="city.invalid && city.touched" class="text-red-500">
-         City must contain only letters!
-       </div>
-       </div>
- 
-        <div>
-          <label>Course</label>
-          <input type="text"
-                 [(ngModel)]="student.course"
-                 name="course"
-                 #course="ngModel"
-                 required>
+        <div class="form-group">
+          <label>Course <span class="text-danger">*</span></label>
+          <select class="form-control" 
+                  name="course" 
+                  [(ngModel)]="student.course" 
+                  #course="ngModel" 
+                  required
+                  [class.is-invalid]="course.invalid && (course.touched || studentForm.submitted)">
+            <option value="" disabled>-- Select Course --</option>
+            <option value="Java Full Stack">Java Full Stack</option>
+            <option value="Python Full Stack">Python Full Stack</option>
+            <option value="AI and Machine Learning">AI and Machine Learning</option>
+            <option value="Cloud Computing">Cloud Computing</option>
+            <option value="Data Science">Data Science</option>
+            <option value="DevOps">DevOps</option>
+          </select>
+          <div *ngIf="course.invalid && (course.touched || studentForm.submitted)" class="text-danger">
+            Course selection is required.
+          </div>
         </div>
       </div>
 
-      <!-- Submit -->
-      <button type="submit"
-        class="save-btn"
-        >
-        Save to Database
-      </button>
+      <div class="form-row-full">
+        <button type="submit" 
+                class="submit-btn" 
+                [disabled]="studentForm.invalid">
+          Save Student
+        </button>
+      </div>
 
     </form>
-
   </div>
 </div>

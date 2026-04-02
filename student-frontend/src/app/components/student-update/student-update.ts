@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 1. Added ChangeDetectorRef
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService } from '../../service/student.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Student } from '../../models/student.model'; 
 
 @Component({
   selector: 'app-student-update',
@@ -14,54 +15,67 @@ import { CommonModule } from '@angular/common';
 export class StudentUpdateComponent implements OnInit {
 
   id!: number;
-  student: any = {};
+
+  student: Student = {
+    firstName: '',
+    lastName: '',
+    age: 0,
+    gender: '',
+    email: '',
+    phoneNumber: '',
+    city: '',
+    course: ''
+  };
 
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    public router: Router,
+    private cdr: ChangeDetectorRef // 2. Injecting Change Detector
+  ) {}
 
   ngOnInit(): void {
-    // Get ID from URL /update-student/52
     this.id = this.route.snapshot.params['id'];
 
-    // Fetch student details from backend
     this.studentService.getStudentById(this.id).subscribe({
-      next: (data) => {
-        this.student = data;
-        console.log("Loaded student:", this.student);
+      next: (data: Student) => {
+        this.student = data; 
+        
+        // 🔥 This is the fix! It forces Angular to refresh the UI 
+        // with the new data immediately without waiting for a click.
+        this.cdr.detectChanges(); 
       },
-      error: (err) => {
-        console.error("Could not fetch student details", err);
-        alert("Failed to load student details. Check backend.");
+      error: () => {
+        alert("Failed to load student details!");
       }
     });
   }
 
-  // Called when update form is submitted
+  // Submit update
   onSubmit(form: any) {
 
-  // 🚫 STOP if invalid
-  if (form.invalid) {
-    alert("Please fix validation errors!");
-    return;
-  }
+    // Show all validation errors if they try to submit with mistakes
+    Object.keys(form.controls).forEach(field => {
+      form.controls[field].markAsTouched();
+    });
 
-  // ✅ Only valid data goes
-  this.studentService.updateStudent(this.student.id, this.student).subscribe({
-    next: (res: any) => {
-      alert(res.message);
-      this.goToStudentList();
-    },
-    error: () => {
-      alert("Update failed!");
+    if (form.invalid) {
+      alert("Please fix validation errors!");
+      return;
     }
-  });
-}
+
+    this.studentService.updateStudent(this.id, this.student).subscribe({
+      next: () => {
+        alert("Student updated successfully");
+        this.goToStudentList();
+      },
+      error: () => {
+        alert("Update failed!");
+      }
+    });
+  }
 
   goToStudentList() {
     this.router.navigate(['/view-students']);
   }
-
 }

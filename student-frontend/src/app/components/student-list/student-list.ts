@@ -1,28 +1,27 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { Student } from '../../models/student.model';
 import { StudentService } from '../../service/student.service';
-import { StudentSearchPipe } from '../../pipes/student-search.pipe';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, StudentSearchPipe],
+  imports: [CommonModule, FormsModule],
   templateUrl: './student-list.html',
   styleUrls: ['./student-list.css']
 })
 export class StudentList implements OnInit {
-
   students: Student[] = [];
+  filteredStudents: Student[] = [];
   searchText: string = '';
 
   constructor(
     private studentService: StudentService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef // Forces the UI to update
   ) {}
 
   ngOnInit(): void {
@@ -32,36 +31,51 @@ export class StudentList implements OnInit {
   loadStudents(): void {
     this.studentService.getStudents().subscribe({
       next: (data: Student[]) => {
-        this.students = data;
+        console.log("Data successfully arrived!");
+        
+        // Use spread operator [...] to ensure Angular sees a NEW array
+        this.students = [...data];
+        this.filteredStudents = [...data]; 
+        
+        // Trigger manual update
         this.cdr.detectChanges();
-        console.log(this.students);
+        
+        console.log("Table should now show rows:", this.filteredStudents.length);
       },
-      error: (error) => {
-        console.error("Error loading students:", error);
-      }
+      error: (error) => console.error("Error:", error)
     });
   }
 
-  addStudent(): void {
-    this.router.navigate(['/create-student']);
+  onSearchChange(): void {
+    const search = this.searchText.toLowerCase().trim();
+    if (!search) {
+      this.filteredStudents = [...this.students];
+    } else {
+      this.filteredStudents = this.students.filter(s => 
+        (s.firstName || '').toLowerCase().includes(search) ||
+        (s.lastName || '').toLowerCase().includes(search) ||
+        (s.email || '').toLowerCase().includes(search) ||
+        (s.course || '').toLowerCase().includes(search)
+      );
+    }
+    this.cdr.detectChanges();
   }
 
-  onEdit(student: Student): void {
-    this.router.navigate(['/update-student', student.studentId]);
-  }
-
-  onDelete(id: number): void {
-    if (confirm("Are you sure you want to delete this student?")) {
-      this.studentService.deleteStudent(id).subscribe({
-        next: () => {
-          alert("Student deleted successfully");
-          this.loadStudents();
-        },
-        error: (error) => {
-          console.error("Delete failed:", error);
-        }
-      });
+  addStudent() { this.router.navigate(['/create-student']); }
+  
+  onEdit(student: Student) {
+    if (student.studentId) {
+      this.router.navigate(['/update-student', student.studentId]);
     }
   }
 
+  onDelete(id: number | undefined): void {
+    if (!id) return;
+    if (confirm("Are you sure?")) {
+      this.studentService.deleteStudent(id).subscribe(() => {
+        alert("Deleted!");
+        this.loadStudents();
+      });
+    }
+  }
 }

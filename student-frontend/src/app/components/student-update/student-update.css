@@ -1,66 +1,61 @@
-/* Page background */
+/* 1. Page Background */
 .update-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(120deg, #e0f7fa, #e1bee7);
-  padding: 30px;
+  padding: 30px 20px; /* Reduced top padding */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Card container */
+/* 2. Container - Lowered vertical padding for less height */
 .update-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 900px; 
   background: #ffffff;
-  padding: 40px 50px;
+  padding: 45px 55px; /* Reduced from 65px to 45px */
   border-radius: 15px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .update-container:hover {
   transform: translateY(-5px);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
 }
 
-/* Header with back button */
+/* 3. Header - Trimmed margin */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 35px;
+  margin-bottom: 35px; /* Reduced from 50px */
 }
 
 .header h2 {
   margin: 0;
-  font-size: 28px;
+  font-size: 28px; /* Slightly smaller title */
   font-weight: 700;
   color: #333;
 }
 
 .back-btn {
-  padding: 10px 22px;
+  padding: 9px 20px;
   border: none;
   border-radius: 8px;
   background-color: #ff6f61;
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.back-btn:hover {
-  background-color: #e65b50;
-}
-
-/* Two-column layout */
+/* 4. Form Rows - Lowered spacing between rows */
 .student-form .row {
   display: flex;
-  gap: 25px;
-  margin-bottom: 25px;
+  gap: 30px; 
+  margin-bottom: 25px; /* Reduced from 38px to 25px */
   flex-wrap: wrap;
 }
 
@@ -68,61 +63,72 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 300px;
 }
 
+/* 5. Labels - Tighter spacing to input box */
 .form-group label {
-  margin-bottom: 8px;
+  margin-bottom: 8px; /* Reduced from 12px to 8px */
   font-weight: 600;
   color: #555;
+  font-size: 14px;
 }
 
+/* 6. Inputs - Slightly sleeker height */
 .form-group input,
 .form-group select {
-  padding: 14px 12px;
+  padding: 14px 15px; /* Reduced from 16px to 14px */
   border-radius: 10px;
   border: 1px solid #ccc;
   font-size: 15px;
-  transition: 0.3s;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+select.form-control {
+  background-color: #f8f9fa;
+}
+
+.form-control:focus {
   border-color: #7b1fa2;
   box-shadow: 0 0 8px rgba(123,31,162,0.2);
   outline: none;
 }
 
-/* Full width row for submit button */
+/* 7. Error Style */
+.text-danger {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* 8. Submit Button Area */
 .form-row-full {
-  margin-top: 15px;
+  margin-top: 20px; /* Reduced from 30px */
 }
 
 .submit-btn {
   width: 100%;
-  padding: 16px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 16px; /* Slightly shorter button */
+  font-size: 17px;
+  font-weight: 700;
   border: none;
   border-radius: 12px;
   background: linear-gradient(45deg, #7b1fa2, #9c27b0);
   color: white;
   cursor: pointer;
-  transition: 0.4s;
   box-shadow: 0 6px 18px rgba(156,39,176,0.3);
 }
 
-.submit-btn:hover {
-  background: linear-gradient(45deg, #9c27b0, #ab47bc);
-  box-shadow: 0 8px 22px rgba(156,39,176,0.4);
-}
-
-/* Responsive: stack columns on mobile */
+/* 9. Mobile responsiveness */
 @media (max-width: 768px) {
   .student-form .row {
     flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
   }
-
   .update-container {
-    padding: 30px 25px;
+    padding: 35px 25px;
   }
 }
