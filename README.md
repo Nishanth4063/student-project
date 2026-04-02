@@ -69,7 +69,7 @@ Database (SQL Server)
 
 ### ➕ Create Form Validation Errors
 
-![Create Validation](img/create-validation.png)
+![Create Validation](img/createvalidation-error.png)
 
 * Displays real-time validation messages for invalid inputs
 * Prevents submission when required fields are missing
@@ -79,7 +79,7 @@ Database (SQL Server)
 
 ### ✏️ Update Form Validation Errors
 
-![Update Validation](img/update-validation.png)
+![Update Validation](img/update-validation-error.png)
 
 * Ensures updated data meets validation rules
 * Prevents incorrect updates to the database
