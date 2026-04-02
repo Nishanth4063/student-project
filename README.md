@@ -45,17 +45,45 @@ Database (SQL Server)
 
 ![Dashboard](img/dashboard.png)
 
+---
+
 ### ➕ Add Student
 
 ![Create](img/create.png)
+
+---
 
 ### ✏️ Update Student
 
 ![Update](img/update.png)
 
+---
+
 ### ⚠️ Validation Example
 
 ![Validation Error](img/validation-error.png)
+
+---
+
+## ⚠️ Validation & Error Handling
+
+### ➕ Create Form Validation Errors
+
+![Create Validation](img/create-validation.png)
+
+* Displays real-time validation messages for invalid inputs
+* Prevents submission when required fields are missing
+* Highlights incorrect fields clearly for users
+
+---
+
+### ✏️ Update Form Validation Errors
+
+![Update Validation](img/update-validation.png)
+
+* Ensures updated data meets validation rules
+* Prevents incorrect updates to the database
+* Improves data integrity and user experience
 
 ---
 
